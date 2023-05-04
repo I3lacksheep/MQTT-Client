@@ -1,9 +1,14 @@
+package wetter;
+
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5Publish;
+import util.Constants;
+import wetter.Data;
 
 import java.io.IOException;
 
@@ -39,8 +44,8 @@ public class Client {
         return client;
     }
 
-    public void messageReceived(Mqtt5Publish publish)  {
-        var objectMapper = new ObjectMapper();
+    private void messageReceived(Mqtt5Publish publish)  {
+        var objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
         try {
             Data data = objectMapper.readValue(publish.getPayloadAsBytes(), Data.class);
