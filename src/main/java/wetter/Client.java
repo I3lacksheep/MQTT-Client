@@ -14,12 +14,6 @@ import java.io.IOException;
 
 public class Client {
 
-    private final Mqtt5Client client;
-
-    public Client() {
-        client = getMQTTClient();
-    }
-
     private Mqtt5Client getMQTTClient() {
         // 1. create the client
         final Mqtt5AsyncClient client = Mqtt5Client.builder()
@@ -50,10 +44,6 @@ public class Client {
         try {
             Data data = objectMapper.readValue(publish.getPayloadAsBytes(), Data.class);
             System.out.println(data.toString());
-        } catch (StreamReadException e) {
-            e.printStackTrace();
-        } catch (DatabindException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
