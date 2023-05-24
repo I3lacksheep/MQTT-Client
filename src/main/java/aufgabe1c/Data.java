@@ -34,13 +34,13 @@ public class Data {
 
     @Override
     public String toString(){
-        return "Stadt:"+city+"\n"+
-                "StadtID:"+cityId+"\n"+
-                "Zeitstempel:"+timeStamp+"\n"+
-                "Kommentar:"+comment+"\n"+
-                "Aktuelle Temperatur:"+tempCurrent+"\n"+
-                "Maximale Temperatur:"+tempMax+"\n"+
-                "Minimale Temperatur:"+tempMin+"\n";
+        return "Stadt: "+city+"\n"+
+                "StadtID: "+cityId+"\n"+
+                "Zeitstempel: "+timeStamp+"\n"+
+                "Kommentar: "+comment+"\n"+
+                "Aktuelle Temparatur: "+tempCurrent+"\n"+
+                "Maximale Temparatur: "+tempMax+"\n"+
+                "Minimale Temparatur: "+tempMin+"\n";
     }
 }
 
