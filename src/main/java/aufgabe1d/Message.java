@@ -11,6 +11,8 @@ public class Message {
         this.topic = topic;
     }
 
+    public Message() {}
+
     @JsonProperty("sender")
     private String sender = Constants.SENDER_NAME;
 

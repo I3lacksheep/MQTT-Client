@@ -3,6 +3,7 @@ package aufgabe1d;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient;
+import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5PayloadFormatIndicator;
 import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5Publish;
 import util.Constants;
 
@@ -24,8 +25,9 @@ public class ChatClientState {
         Mqtt5Publish mqttMessage;
         try {
             mqttMessage = Mqtt5Publish.builder()
-                    .topic("/aichat/default")
+                    .topic("/aichat/clientstate")
                     .payload(objectMapper.writeValueAsBytes(message))
+                    .payloadFormatIndicator(Mqtt5PayloadFormatIndicator.UTF_8)
                     .build();
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

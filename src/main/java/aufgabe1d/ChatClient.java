@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
+import com.hivemq.client.mqtt.mqtt5.message.Mqtt5MessageType;
+import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5PayloadFormatIndicator;
 import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5Publish;
 import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5WillPublish;
 import util.Constants;
@@ -25,8 +27,9 @@ public class ChatClient {
         Mqtt5WillPublish will;
         try {
             will = Mqtt5WillPublish.builder()
-                    .topic("/aichat/default")
+                    .topic("/aichat/clientstate")
                     .payload(objectMapper.writeValueAsBytes(willMessage))
+                    .payloadFormatIndicator(Mqtt5PayloadFormatIndicator.UTF_8)
                     .build();
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -53,7 +56,7 @@ public class ChatClient {
     }
 
     public void start(){
-
+        System.out.println("Du kannst jetzt schreiben. Mit !quit wird das Programm beendet.");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String input;
         while (true) {
@@ -63,6 +66,8 @@ public class ChatClient {
                     ChatClientState.stop(client);
                     client.disconnect().join();
                     System.exit(0);
+                } else if (input.isEmpty()) {
+                    continue;
                 }
 
                 var message = new Message(input, Constants.ID, "default");
@@ -70,10 +75,11 @@ public class ChatClient {
                 var mqttMessage = Mqtt5Publish.builder()
                         .topic("/aichat/default")
                         .payload(objectMapper.writeValueAsBytes(message))
+                        .payloadFormatIndicator(Mqtt5PayloadFormatIndicator.UTF_8)
                         .build();
 
                 client.publish(mqttMessage).join();
-            } catch(IOException e){
+            } catch(IOException e) {
                 System.out.println("Fehler beim Einlesen der Kommandozeile");
             }
         }
