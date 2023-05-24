@@ -1,13 +1,11 @@
-package wetter;
+package aufgabe1c;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 
 import java.math.BigInteger;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @AllArgsConstructor
 @lombok.Data

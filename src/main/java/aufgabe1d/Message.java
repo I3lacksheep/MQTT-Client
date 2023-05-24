@@ -1,11 +1,9 @@
-package chat;
+package aufgabe1d;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.NoArgsConstructor;
 import util.Constants;
 
 @lombok.Data
-@NoArgsConstructor(force = true)
 public class Message {
     public Message(String text, String clientId, String topic) {
         this.text = text;
